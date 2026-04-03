@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BloomCare Hospital Management System</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-icon">❤</div>
+        <div>
+          <h2>BloomCare</h2>
+          <p>Hospital System</p>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <button class="nav-btn active" data-section="dashboard">Dashboard</button>
+        <button class="nav-btn" data-section="patients">Patients</button>
+        <button class="nav-btn" data-section="doctors">Doctors</button>
+        <button class="nav-btn" data-section="appointments">Appointments</button>
+        <button class="nav-btn" data-section="billing">Billing</button>
+        <button class="nav-btn" data-section="inventory">Pharmacy</button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <p>Frontend only ✨</p>
+        <small>Made for GitHub Pages / VS Code</small>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <h1 id="pageTitle">Dashboard</h1>
+          <p class="subtitle">Welcome to your hospital management system</p>
+        </div>
+        <div class="topbar-right">
+          <input type="text" id="globalSearch" placeholder="Search..." />
+          <button class="cute-btn" id="seedDataBtn">Load Sample Data</button>
+        </div>
+      </header>
+
+      <!-- Dashboard -->
+      <section class="section active" id="dashboard">
+        <div class="cards">
+          <div class="card stat-card">
+            <h3>Total Patients</h3>
+            <p id="totalPatients">0</p>
+          </div>
+          <div class="card stat-card">
+            <h3>Total Doctors</h3>
+            <p id="totalDoctors">0</p>
+          </div>
+          <div class="card stat-card">
+            <h3>Appointments</h3>
+            <p id="totalAppointments">0</p>
+          </div>
+          <div class="card stat-card">
+            <h3>Total Revenue</h3>
+            <p id="totalRevenue">₱0</p>
+          </div>
+        </div>
+
+        <div class="dashboard-grid">
+          <div class="card">
+            <div class="card-header">
+              <h3>Recent Appointments</h3>
+            </div>
+            <div id="recentAppointments" class="list-box"></div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h3>Low Stock Medicines</h3>
+            </div>
+            <div id="lowStockList" class="list-box"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Patients -->
+      <section class="section" id="patients">
+        <div class="card">
+          <div class="card-header">
+            <h3>Patient Records</h3>
+            <button class="cute-btn" onclick="openPatientModal()">+ Add Patient</button>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Age</th>
+                  <th>Gender</th>
+                  <th>Contact</th>
+                  <th>Condition</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="patientsTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Doctors -->
+      <section class="section" id="doctors">
+        <div class="card">
+          <div class="card-header">
+            <h3>Doctors</h3>
+            <button class="cute-btn" onclick="openDoctorModal()">+ Add Doctor</button>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Specialization</th>
+                  <th>Schedule</th>
+                  <th>Contact</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="doctorsTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Appointments -->
+      <section class="section" id="appointments">
+        <div class="card">
+          <div class="card-header">
+            <h3>Appointments</h3>
+            <button class="cute-btn" onclick="openAppointmentModal()">+ Add Appointment</button>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Patient</th>
+                  <th>Doctor</th>
+                  <th>Date</th>
+                  <th>Time</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="appointmentsTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Billing -->
+      <section class="section" id="billing">
+        <div class="card">
+          <div class="card-header">
+            <h3>Billing</h3>
+            <button class="cute-btn" onclick="openBillingModal()">+ Add Bill</button>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Patient</th>
+                  <th>Service</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                  <th>Date</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="billingTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Inventory -->
+      <section class="section" id="inventory">
+        <div class="card">
+          <div class="card-header">
+            <h3>Pharmacy Inventory</h3>
+            <button class="cute-btn" onclick="openInventoryModal()">+ Add Medicine</button>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Medicine</th>
+                  <th>Category</th>
+                  <th>Stock</th>
+                  <th>Price</th>
+                  <th>Expiry</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="inventoryTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Patient Modal -->
+  <div class="modal" id="patientModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="patientModalTitle">Add Patient</h3>
+        <button class="close-btn" onclick="closeModal('patientModal')">&times;</button>
+      </div>
+      <form id="patientForm">
+        <input type="hidden" id="patientId" />
+        <div class="form-grid">
+          <input type="text" id="patientName" placeholder="Full Name" required />
+          <input type="number" id="patientAge" placeholder="Age" required />
+          <select id="patientGender" required>
+            <option value="">Select Gender</option>
+            <option>Female</option>
+            <option>Male</option>
+            <option>Other</option>
+          </select>
+          <input type="text" id="patientContact" placeholder="Contact Number" required />
+          <input type="text" id="patientCondition" placeholder="Condition / Diagnosis" required />
+        </div>
+        <button type="submit" class="cute-btn full-btn">Save Patient</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Doctor Modal -->
+  <div class="modal" id="doctorModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="doctorModalTitle">Add Doctor</h3>
+        <button class="close-btn" onclick="closeModal('doctorModal')">&times;</button>
+      </div>
+      <form id="doctorForm">
+        <input type="hidden" id="doctorId" />
+        <div class="form-grid">
+          <input type="text" id="doctorName" placeholder="Doctor Name" required />
+          <input type="text" id="doctorSpecialization" placeholder="Specialization" required />
+          <input type="text" id="doctorSchedule" placeholder="Schedule" required />
+          <input type="text" id="doctorContact" placeholder="Contact Number" required />
+        </div>
+        <button type="submit" class="cute-btn full-btn">Save Doctor</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Appointment Modal -->
+  <div class="modal" id="appointmentModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="appointmentModalTitle">Add Appointment</h3>
+        <button class="close-btn" onclick="closeModal('appointmentModal')">&times;</button>
+      </div>
+      <form id="appointmentForm">
+        <input type="hidden" id="appointmentId" />
+        <div class="form-grid">
+          <select id="appointmentPatient" required></select>
+          <select id="appointmentDoctor" required></select>
+          <input type="date" id="appointmentDate" required />
+          <input type="time" id="appointmentTime" required />
+          <select id="appointmentStatus" required>
+            <option value="">Select Status</option>
+            <option>Scheduled</option>
+            <option>Completed</option>
+            <option>Cancelled</option>
+          </select>
+        </div>
+        <button type="submit" class="cute-btn full-btn">Save Appointment</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Billing Modal -->
+  <div class="modal" id="billingModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="billingModalTitle">Add Bill</h3>
+        <button class="close-btn" onclick="closeModal('billingModal')">&times;</button>
+      </div>
+      <form id="billingForm">
+        <input type="hidden" id="billId" />
+        <div class="form-grid">
+          <select id="billPatient" required></select>
+          <input type="text" id="billService" placeholder="Service / Treatment" required />
+          <input type="number" id="billAmount" placeholder="Amount" required />
+          <input type="date" id="billDate" required />
+          <select id="billStatus" required>
+            <option value="">Select Status</option>
+            <option>Paid</option>
+            <option>Pending</option>
+            <option>Overdue</option>
+          </select>
+        </div>
+        <button type="submit" class="cute-btn full-btn">Save Bill</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Inventory Modal -->
+  <div class="modal" id="inventoryModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="inventoryModalTitle">Add Medicine</h3>
+        <button class="close-btn" onclick="closeModal('inventoryModal')">&times;</button>
+      </div>
+      <form id="inventoryForm">
+        <input type="hidden" id="medicineId" />
+        <div class="form-grid">
+          <input type="text" id="medicineName" placeholder="Medicine Name" required />
+          <input type="text" id="medicineCategory" placeholder="Category" required />
+          <input type="number" id="medicineStock" placeholder="Stock" required />
+          <input type="number" id="medicinePrice" placeholder="Price" required />
+          <input type="date" id="medicineExpiry" required />
+        </div>
+        <button type="submit" class="cute-btn full-btn">Save Medicine</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
